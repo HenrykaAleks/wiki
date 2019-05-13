@@ -1,12 +1,12 @@
 <!-- TITLE: CAVICO -->
-<!-- SUBTITLE:  QoE/QoS Experiment -->
+<!-- SUBTITLE:  QoS/QoE Experiment for the automotive sector -->
 
-# TCC & HINS & NSD Description
+# QoS/QoE Experiment for the automotive sector
 
 **Description of the VNF**
 The CAVICO project aims to provide a technology enabler for video streaming that is controlled in the function of QoE (Quality of Experience). In order to present a proof of the concept the demonstrator is based on a video camera installed in the car provided within automotive Experimental Vertical Instance (EVI) environment  developed by IT Aveiro partner.
-The Architecture of CAVICO system is a module-based solution that is shown in the figure.
-
+The architecture of CAVICO system is a module-based solution that is shown in the figure.
+![CAVICO architecture](/uploads/cavico/architecture.png "CAVICO architecture")
 A main part of the system is located in VNF (Virtual Network Function) where ControlApp is responsible for interpretation of video stream, GPS (Global Positioning System) data and network throughput. Raspberry Pi (RPi) cyclically sends request for control via TCP (Transmission Control Protocol) connection. Every time, when a new request is received, the control algorithm calculates current FPS (Frame Per Second), video resolution and stream bit rate using information about present use case, observed video QoE and measured network throughput.
 
 **Running an experiment**
@@ -30,20 +30,20 @@ cd H2020-CAVICO_DesktopApp
 ./H2020-CAVICO_DesktopApp 1
 ```
 A switch “1” overwrites any settings in the configuration file and forces to start the server application unconditionally.
-5.	In a new terminal window repeat steps 2 3 and then login to OBU: ssh using the credentials;
+5.	In a new terminal window repeat steps 2-3 and then login to OBU: ssh using the credentials;
 6.	run GPS server:
 ```text
 cd H2020-CAVICO_gps_server_OBU/gps_server_obu/
 python gps_server.py
 ```
-7.	In a new terminal window repeat steps 2 3 and then login to Raspberry Pi module: ssh using the credentials;
+7.	In a new terminal window repeat steps 2-3 and then login to Raspberry Pi module: ssh using the credentials;
 8.	Run RPiApp application using commands:
 ```text
 cd CAVICO
 python main.py IP_OF_VNF CONTROL_PORT
 ```
 During tests the parameters were: ```text IP_OF_VNF```, ```text CONTROL_PORT = 9000```
-9.	In a new terminal window repeat steps 2 3 and run a program that measures the transmission throughput:
+9.	In a new terminal window repeat steps 2-3 and run a program that measures the transmission throughput:
 ```text
 cd H2020-CAVICO_DesktopApp/externalPrograms
 python3 SpeedTesterServer.py SPEEDTESTER_PORT
@@ -60,7 +60,7 @@ Alternatively you can access applications at the client site via LMA Hub:
 Results are stored in the following files:
 ● BI.csv - Block indicator;
 ● control.csv:
-	- networkScale - ¯("throughput" ),
+	- networkScale - ¯("throughput"),
 	- FPS,
 	- res_X, res_Y - video resolution,
 	- bitrate - transmission throughput,
@@ -71,13 +71,14 @@ Results are stored in the following files:
 ● TA_S.csv: TA scale.
 The results can be downloaded from the server to plot them.
 
-Example results
+**Example results**
 VNF is capable to collect data that allow:
 ● identifying use cases (useCase),
 ● measuring transmission throughput (bitrate),
 and on this base it provides changes in:
 ● the frame rate (FPS),
 ● video resolution (res_X).
-
-===
-**Git link: git clone https://git.scanlab.gr/georget/vru_safe_cloud.git**
+![use-case](/uploads/cavico/usecase.png "Result for use-case")
+![bit rate](/uploads/cavico/bitrate.png "Result for bit rate")
+![FPS](/uploads/cavico/fps.png "Result for FPS")
+![resolution](/uploads/cavico/resx.png "Result for resolution")
